@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090c12">
+  <meta name="description" content="60KTD: мрачная оборона против инопланетного роя. Интерактивная заставка с параллаксом и исходными слоями.">
+  <title>60KTD — Siege / Parallax</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="exhibit">
+    <header class="masthead"><span>60KTD / SIEGE</span><span>PARALLAX STUDY · 02</span></header>
+    <section class="stage" id="stage" aria-label="Башни слева отбивают атаку инопланетных жуков справа">
+      <img class="art" id="background" src="assets/00-background.png" alt="" decoding="async" fetchpriority="high">
+      <img class="art" id="swarm" src="assets/02-swarm-right.png" alt="" decoding="async">
+      <img class="art" id="defense" src="assets/01-defense-left.png" alt="" decoding="async">
+      <div class="menu" id="menu">
+        <h1>60KTD</h1>
+        <button id="view-art" type="button">VIEW ART</button>
+        <button id="options" type="button">OPTIONS</button>
+        <a href="https://github.com/horamupa/60ktd-parallax" target="_blank" rel="noopener noreferrer">SOURCE</a>
+      </div>
+      <div class="loader" id="loader" role="status"><span>60KTD</span><p id="load-status">ЗАГРУЗКА СЦЕНЫ / 0 из 3</p></div>
+    </section>
+    <footer class="toolbar">
+      <div class="switches">
+        <label><input id="motion" type="checkbox" checked> Параллакс</label>
+        <label><input id="show-menu" type="checkbox" checked> Меню</label>
+      </div>
+      <p class="hint">Двигайте курсор · на телефоне проведите по сцене</p>
+      <a class="download" href="downloads/60KTD-brutal-parallax-v2.zip" download>СЛОИ PNG ↓</a>
+    </footer>
+    <p class="caption">Тяжёлая оборона. Биомеханический рой. Два независимых слоя и неподвижное меню.</p>
+    <noscript><p>Для анимации нужен JavaScript. <a href="source/master-art.png">Открыть цельное полотно</a>.</p></noscript>
+  </main>
+  <dialog id="settings" aria-labelledby="settings-title">
+    <form method="dialog">
+      <header><h2 id="settings-title">OPTIONS</h2><button aria-label="Закрыть настройки" value="close">×</button></header>
+      <label for="strength">Сила параллакса <output id="strength-value">1×</output></label>
+      <input id="strength" type="range" min="0" max="2" step="0.1" value="1">
+      <p>Движение меню отключено. Системная настройка уменьшения движения учитывается автоматически.</p>
+      <a href="source/master-art.png" target="_blank" rel="noopener noreferrer">Цельное полотно ↗</a>
+    </form>
+  </dialog>
+</body>
+</html>
