@@ -5,6 +5,12 @@ a{color:inherit;text-underline-offset:4px}button,input,a{-webkit-tap-highlight-c
 button,a,input{touch-action:manipulation}
 :focus-visible{outline:2px solid var(--accent);outline-offset:5px}
 .exhibit{width:min(1440px,100%)}.masthead{display:flex;justify-content:space-between;gap:12px;margin-bottom:14px;font-size:11px;letter-spacing:2px;color:var(--muted)}
+.version-switch{display:flex;gap:0;margin-bottom:14px;width:fit-content;border:1px solid #514438}
+.version-switch button{font:11px "Courier New",monospace;letter-spacing:1px;padding:10px 16px;min-height:36px;border:0;color:var(--muted);background:transparent;cursor:pointer}
+.version-switch button+button{border-left:1px solid #514438}
+.version-switch button[aria-pressed="true"]{background:#d5954e;color:#0b0c10;font-weight:bold}
+.version-switch button:hover{color:#fff;background:#322820}
+.version-switch button[aria-pressed="true"]:hover{color:#0b0c10;background:#efb66f}
 .stage{position:relative;aspect-ratio:16/9;overflow:hidden;isolation:isolate;background:#0c1019;border:1px solid #2c2c2b;touch-action:pan-y}
 .art{position:absolute;left:-2%;top:-2%;width:104%;height:104%;object-fit:fill;pointer-events:none;user-select:none;will-change:transform}
 .menu{position:absolute;left:50%;top:30%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:clamp(4px,.7vw,10px);z-index:3;transition:opacity .2s}
@@ -15,6 +21,7 @@ button,a,input{touch-action:manipulation}
 .toolbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;padding:16px 0;border-bottom:1px solid #2c2c2b;font-size:12px}
 .switches{display:flex;gap:20px}.switches label{display:flex;align-items:center;gap:7px;cursor:pointer;min-height:24px}.switches input{accent-color:var(--accent);width:14px;height:14px;margin:0}
 .hint{margin:0;color:var(--muted);font-size:11px}.download{color:#e8b16f;font-size:11px;letter-spacing:1px}.caption{font-size:11px;color:var(--muted);line-height:1.6;margin:14px 0 0}
+.downloads{display:flex;gap:18px;flex-wrap:wrap}
 .loader{position:absolute;inset:0;z-index:5;background:#090c12;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;transition:opacity .35s}
 .loader span{font-size:30px;font-weight:900;letter-spacing:-2px}.loader p{font-size:10px;letter-spacing:2px;color:var(--accent)}.loader.ready{opacity:0;pointer-events:none}.loader.failed p{max-width:80%;line-height:1.8;text-align:center}
 dialog{background:#11141b;color:var(--text);border:1px solid #807260;padding:24px;width:min(420px,calc(100% - 32px));box-shadow:0 24px 100px #000;line-height:1.7}

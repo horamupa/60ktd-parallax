@@ -39,19 +39,47 @@ document.addEventListener('visibilitychange',()=>{
   if(document.hidden){cancelAnimationFrame(frameId);frameId=null}
   else if(assetsReady&&frameId===null)frameId=requestAnimationFrame(frame);
 });
-let loaded=0;
-Promise.all(layers.map(async image=>{
-  await image.decode();
-  loaded++;
-  document.getElementById('load-status').textContent='ЗАГРУЗКА СЦЕНЫ / '+loaded+' из 3';
-})).then(()=>{
-  assetsReady=true;
-  document.getElementById('loader').classList.add('ready');
-  document.getElementById('loader').setAttribute('aria-hidden','true');
-  if(!document.hidden&&frameId===null)frameId=requestAnimationFrame(frame);
-}).catch(()=>{
-  document.getElementById('loader').classList.add('failed');
-  const message=document.getElementById('load-status');
-  message.textContent='Не удалось загрузить сцену. ';
-  const retry=document.createElement('button');retry.type='button';retry.textContent='Повторить';retry.addEventListener('click',()=>location.reload());message.append(retry);
-});
+const scenes={
+  brutal:{directory:'assets/',master:'source/master-art.png',study:'02',caption:'Тяжёлая оборона. Биомеханический рой. Два независимых слоя и неподвижное меню.'},
+  comic:{directory:'assets/comic/',master:'source/comic/master-art.png',study:'01',caption:'Первая комиксная версия. Бирюзовые башни и фиолетовый рой. Два независимых слоя и неподвижное меню.'}
+};
+const filenames=['00-background.png','02-swarm-right.png','01-defense-left.png'];
+const versionButtons=Array.from(document.querySelectorAll('[data-scene]'));
+const sceneCache=new Map();
+let sceneRequest=0;
+async function loadScene(key){
+  if(!Object.hasOwn(scenes,key))return;
+  const request=++sceneRequest,scene=scenes[key],loader=document.getElementById('loader'),message=document.getElementById('load-status');
+  loader.classList.remove('ready','failed');loader.removeAttribute('aria-hidden');stage.setAttribute('aria-busy','true');
+  message.textContent='ЗАГРУЗКА СЦЕНЫ / '+scene.study;
+  versionButtons.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.scene===key)));
+  try{
+    if(!sceneCache.has(key)){
+      const promise=Promise.all(filenames.map(async filename=>{
+        const image=new Image();image.src=scene.directory+filename;await image.decode();return image;
+      }));
+      sceneCache.set(key,promise);
+      promise.catch(()=>{if(sceneCache.get(key)===promise)sceneCache.delete(key)});
+    }
+    const images=await sceneCache.get(key);
+    if(request!==sceneRequest)return;
+    layers.forEach((layer,index)=>{layer.src=images[index].src});
+    await Promise.all(layers.map(image=>image.decode()));
+    if(request!==sceneRequest)return;
+    assetsReady=true;stage.removeAttribute('aria-busy');
+    document.getElementById('study-label').textContent='PARALLAX STUDY · '+scene.study;
+    document.getElementById('caption').textContent=scene.caption;
+    document.getElementById('master-link').href=scene.master;
+    loader.classList.add('ready');loader.setAttribute('aria-hidden','true');
+    history.replaceState(null,'','#'+key);
+    if(!document.hidden&&frameId===null)frameId=requestAnimationFrame(frame);
+  }catch(error){
+    if(request!==sceneRequest)return;
+    stage.removeAttribute('aria-busy');loader.classList.add('failed');
+    message.textContent='Не удалось загрузить сцену. ';
+    const retry=document.createElement('button');retry.type='button';retry.textContent='Повторить';retry.addEventListener('click',()=>loadScene(key));message.append(retry);
+  }
+}
+versionButtons.forEach(button=>button.addEventListener('click',()=>loadScene(button.dataset.scene)));
+window.addEventListener('hashchange',()=>{const key=location.hash.slice(1);if(Object.hasOwn(scenes,key))loadScene(key)});
+loadScene(location.hash==='#comic'?'comic':'brutal');

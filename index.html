@@ -11,7 +11,11 @@
 </head>
 <body>
   <main class="exhibit">
-    <header class="masthead"><span>60KTD / SIEGE</span><span>PARALLAX STUDY · 02</span></header>
+    <header class="masthead"><span>60KTD / SIEGE</span><span id="study-label">PARALLAX STUDY · 02</span></header>
+    <div class="version-switch" role="group" aria-label="Версия графики">
+      <button type="button" data-scene="comic" aria-pressed="false">01 / COMIC</button>
+      <button type="button" data-scene="brutal" aria-pressed="true">02 / BRUTAL</button>
+    </div>
     <section class="stage" id="stage" aria-label="Башни слева отбивают атаку инопланетных жуков справа">
       <img class="art" id="background" src="assets/00-background.png" alt="" decoding="async" fetchpriority="high">
       <img class="art" id="swarm" src="assets/02-swarm-right.png" alt="" decoding="async">
@@ -30,9 +34,12 @@
         <label><input id="show-menu" type="checkbox" checked> Меню</label>
       </div>
       <p class="hint">Двигайте курсор · на телефоне проведите по сцене</p>
-      <a class="download" href="downloads/60KTD-brutal-parallax-v2.zip" download>СЛОИ PNG ↓</a>
+      <div class="downloads" aria-label="Скачать исходные слои">
+        <a class="download" href="downloads/60KTD-menu-parallax.zip" download>COMIC PNG ↓</a>
+        <a class="download" href="downloads/60KTD-brutal-parallax-v2.zip" download>BRUTAL PNG ↓</a>
+      </div>
     </footer>
-    <p class="caption">Тяжёлая оборона. Биомеханический рой. Два независимых слоя и неподвижное меню.</p>
+    <p class="caption" id="caption">Тяжёлая оборона. Биомеханический рой. Два независимых слоя и неподвижное меню.</p>
     <noscript><p>Для анимации нужен JavaScript. <a href="source/master-art.png">Открыть цельное полотно</a>.</p></noscript>
   </main>
   <dialog id="settings" aria-labelledby="settings-title">
@@ -41,7 +48,7 @@
       <label for="strength">Сила параллакса <output id="strength-value">1×</output></label>
       <input id="strength" type="range" min="0" max="2" step="0.1" value="1">
       <p>Движение меню отключено. Системная настройка уменьшения движения учитывается автоматически.</p>
-      <a href="source/master-art.png" target="_blank" rel="noopener noreferrer">Цельное полотно ↗</a>
+      <a id="master-link" href="source/master-art.png" target="_blank" rel="noopener noreferrer">Цельное полотно ↗</a>
     </form>
   </dialog>
 </body>
